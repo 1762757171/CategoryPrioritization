@@ -1,5 +1,5 @@
 # CategoryPrioritization
-UnrealEngine plugin that allows you to bring specific directories to the top of the object details panel.
+UnrealEngine plugin that allows you to bring specific categories to the top of the object details panel.
 
 ## Usage
 Declare in class metadata:
