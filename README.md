@@ -10,4 +10,4 @@ then the properties in the specified categories will be brought to the top of de
 ```
 UPROPERTY(Category = "Settings|Character")
 ```
-Also you can specify the categories in project settings.
+Also you can specify the highest priority categories in editor preference settings.
