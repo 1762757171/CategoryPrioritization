@@ -10,20 +10,21 @@ void FCategoryPrioritizationModule::StartupModule()
 {
 	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	const FName& ObjectClassName = UObject::StaticClass()->GetFName();
-	FDetailLayoutCallback const& ObjectDetailLayoutCallback = PropertyModule.GetClassNameToDetailLayoutNameMap().FindChecked(ObjectClassName);
-	PropertyModule.RegisterCustomClassLayout(
-		ObjectClassName,
-		FOnGetDetailCustomizationInstance::CreateLambda([=]() -> TSharedRef<IDetailCustomization>
-		{
-			return FObjectDetailCustomizationOverride::MakeInstance(ObjectDetailLayoutCallback.DetailLayoutDelegate);
-		}), 
-		FRegisterCustomClassLayoutParams(ObjectDetailLayoutCallback.Order));
+	if (FDetailLayoutCallback const* ObjectDetailLayoutCallback = PropertyModule.GetClassNameToDetailLayoutNameMap().Find(ObjectClassName))
+	{
+		FDetailLayoutCallback const LayoutCallbackCopy = *ObjectDetailLayoutCallback;
+		PropertyModule.RegisterCustomClassLayout(
+			ObjectClassName,
+			FOnGetDetailCustomizationInstance::CreateLambda([=]() -> TSharedRef<IDetailCustomization>
+			{
+				return FObjectDetailCustomizationOverride::MakeInstance(LayoutCallbackCopy.DetailLayoutDelegate);
+			}), 
+			FRegisterCustomClassLayoutParams(LayoutCallbackCopy.Order));
+	}
 }
 
 void FCategoryPrioritizationModule::ShutdownModule()
 {
-	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	PropertyModule.UnregisterCustomClassLayout(UObject::StaticClass()->GetFName());
 }
 
 #undef LOCTEXT_NAMESPACE
