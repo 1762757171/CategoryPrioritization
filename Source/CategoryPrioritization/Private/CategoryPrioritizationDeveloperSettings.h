@@ -24,7 +24,7 @@ public:
 	TArray<FName> const& GetHighestCategories() const;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Category Prioritization")
+	UPROPERTY(EditAnywhere, Config, Category = "Category Prioritization")
 	TArray<FName> HighestCategories;
 	
 };
