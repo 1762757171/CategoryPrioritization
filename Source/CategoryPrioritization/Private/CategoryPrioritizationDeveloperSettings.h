@@ -6,7 +6,7 @@
 
 #include "CategoryPrioritizationDeveloperSettings.generated.h"
 
-UCLASS(Config = EditorPerProjectUserSettingsName, DefaultConfig)
+UCLASS(Config = EditorPerProjectUserSettings, DefaultConfig)
 class CATEGORYPRIORITIZATION_API UCategoryPrioritizationDeveloperSettings : public UDeveloperSettings
 {
 	GENERATED_BODY()
