@@ -40,6 +40,8 @@ public class CategoryPrioritization : ModuleRules
 				"SlateCore",
 				// ... add private dependencies that you statically link with here ...	
 				"DeveloperSettings",
+				"PropertyEditor",
+				"DetailCustomizations",	// Make sure detail customization of class UObject has been registered
 			}
 			);
 		

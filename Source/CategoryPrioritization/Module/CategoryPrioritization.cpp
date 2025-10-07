@@ -2,18 +2,19 @@
 
 #include "CategoryPrioritization.h"
 
+#include "DetailCustomizations.h"
 #include "ObjectDetailCustomizationOverride.h"
 
 #define LOCTEXT_NAMESPACE "FCategoryPrioritizationModule"
 
 void FCategoryPrioritizationModule::StartupModule()
 {
-	FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
+	FPropertyEditorModule& PropertyEditorModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	const FName& ObjectClassName = UObject::StaticClass()->GetFName();
-	if (FDetailLayoutCallback const* ObjectDetailLayoutCallback = PropertyModule.GetClassNameToDetailLayoutNameMap().Find(ObjectClassName))
+	if (FDetailLayoutCallback const* ObjectDetailLayoutCallback = PropertyEditorModule.GetClassNameToDetailLayoutNameMap().Find(ObjectClassName))
 	{
 		FDetailLayoutCallback const LayoutCallbackCopy = *ObjectDetailLayoutCallback;
-		PropertyModule.RegisterCustomClassLayout(
+		PropertyEditorModule.RegisterCustomClassLayout(
 			ObjectClassName,
 			FOnGetDetailCustomizationInstance::CreateLambda([=]() -> TSharedRef<IDetailCustomization>
 			{
